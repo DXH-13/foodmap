@@ -81,6 +81,23 @@ cd admin   && npm run dev           # http://localhost:3000
 Cổng lệch chuẩn (5433 thay vì 5432, 6380 thay vì 6379…) là cố ý, để không đụng
 Postgres/Redis/MinIO của dự án khác đang chạy trên cùng máy. Đổi được trong `infra/.env`.
 
+## Trạng thái
+
+Đây là **bộ khung** (Phase 0 của [lộ trình](https://github.com/DXH-13/foodmap-docs/blob/main/07-plan/roadmap-v1.md)).
+Đã chạy được và kiểm chứng đầu-cuối:
+
+| Hạng mục | Trạng thái |
+|---|---|
+| Hạ tầng dev (PostGIS, Redis, MinIO, Mailpit) | ✅ 4 service healthy |
+| Tài liệu: SRS, ERD, 4 ADR, `openapi.yaml` | ✅ |
+| Backend: Flyway 20 bảng, `GET /places/nearby` chạy thật | ✅ 5 test pass |
+| Mobile: bản đồ Google, i18n vi/en, client sinh từ OpenAPI | ✅ bundle thành công |
+| Admin: tổng quan gọi API thật, phiên httpOnly, chặn route | ✅ build thành công |
+| CI cho từng repo con + kiểm tra hợp đồng ở repo cha | ✅ |
+
+Chưa có: xác thực (đăng ký/đăng nhập), đánh giá, feedback, yêu thích, lượt đến,
+thông báo, chatbot — thuộc Phase 1–5.
+
 ## Đóng góp
 
 Commit theo [Conventional Commits](https://www.conventionalcommits.org/).

@@ -16,9 +16,14 @@ Bỏ sót một nơi là lỗi chỉ lộ ra khi người dùng đổi ngôn ng�
 
 | Phần | File | Định dạng |
 |---|---|---|
-| Backend | `backend/src/main/resources/messages_vi.properties`<br>`backend/src/main/resources/messages_en.properties` | `key=giá trị` |
+| Backend | `backend/src/main/resources/messages.properties` (**tiếng Việt**)<br>`backend/src/main/resources/messages_en.properties` | `key=giá trị` |
 | Mobile | `mobile/src/i18n/locales/vi.json`<br>`mobile/src/i18n/locales/en.json` | JSON lồng nhau |
 | Admin | `admin/messages/vi.json`<br>`admin/messages/en.json` | JSON lồng nhau |
+
+⚠️ **Ở backend, bản tiếng Việt nằm ở `messages.properties`, KHÔNG phải `messages_vi.properties`.**
+Spring Boot chỉ tạo bean `MessageSource` khi tìm thấy đúng file `<basename>.properties`.
+Thiếu nó thì mọi lần tra cứu đều trả về chính cái key, và lỗi chỉ lộ ra khi nhìn thấy
+`place.error.not_found` hiện lên màn hình người dùng.
 
 ### Quy ước đặt key
 
@@ -42,7 +47,7 @@ common.state.loading
 ### Backend
 
 ```properties
-# messages_vi.properties
+# messages.properties  (tiếng Việt — mặc định)
 review.error.rating_required=Vui lòng chọn số sao đánh giá
 place.error.not_found=Không tìm thấy địa điểm
 
@@ -54,6 +59,12 @@ place.error.not_found=Place not found
 Ngôn ngữ lấy từ header `Accept-Language` của request, mặc định `vi`.
 `ApiError.message` đã được dịch sẵn; `ApiError.code` thì **không dịch** — nó là mã ổn định
 để client so sánh.
+
+**Bẫy: filter bảo mật chạy trước Spring MVC.** Trong `AuthenticationEntryPoint` và
+`AccessDeniedHandler`, `LocaleContextHolder` chưa được đặt nên nó trả về locale mặc định
+của **máy chủ**, không phải của người dùng. Ở những chỗ đó phải tự đọc header
+`Accept-Language` — xem `RestAuthenticationHandlers`. Lỗi này âm thầm: trên máy dev
+tiếng Anh thì kết quả trông vẫn "đúng".
 
 ### Mobile / Admin
 

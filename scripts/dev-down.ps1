@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 # Tắt hạ tầng dev FoodMap. Dữ liệu trong volume được GIỮ LẠI.
 $ErrorActionPreference = 'Stop'
 

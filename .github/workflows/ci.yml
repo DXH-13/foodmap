@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contract:
+    name: Kiểm tra hợp đồng API
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          # Cần token có quyền đọc submodule private
+          token: ${{ secrets.SUBMODULE_TOKEN || github.token }}
+
+      - name: Cài Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: openapi.yaml phải hợp lệ
+        run: npx --yes openapi-typescript docs/03-api/openapi.yaml --output /tmp/schema.ts
+
+      - name: Client sinh ra phải khớp với openapi.yaml
+        # Đây là cổng bắt buộc của quy tắc contract-first (ADR-0002): sửa spec mà quên
+        # chạy gen-api-client thì client vẫn dùng kiểu cũ, và lỗi chỉ lộ ra lúc chạy thật.
+        run: |
+          npx --yes openapi-typescript docs/03-api/openapi.yaml \
+            --output mobile/src/api/generated/schema.ts
+          npx --yes openapi-typescript docs/03-api/openapi.yaml \
+            --output admin/src/api/generated/schema.ts
+
+          for target in mobile admin; do
+            if [ -n "$(git -C "$target" status --porcelain src/api/generated)" ]; then
+              echo "::error::Client sinh ra o '$target' khong khop voi openapi.yaml."
+              echo "Chay ./scripts/gen-api-client.sh roi commit ket qua trong submodule $target."
+              git -C "$target" --no-pager diff --stat src/api/generated
+              exit 1
+            fi
+          done
+          echo "OK — client cua mobile va admin deu khop voi hop dong."
+
+  infra:
+    name: Kiểm tra hạ tầng dev
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: docker-compose.yml phải hợp lệ
+        run: |
+          cp infra/.env.example infra/.env
+          docker compose -f infra/docker-compose.yml config --quiet
+          echo "OK — cau hinh compose hop le."
+
+      - name: Không có secret nào bị commit
+        run: |
+          # .env thật phải bị bỏ qua; chỉ .env.example được commit
+          if git ls-files --error-unmatch infra/.env 2>/dev/null; then
+            echo "::error::infra/.env da bi commit. File nay phai nam trong .gitignore."
+            exit 1
+          fi
+          echo "OK — khong co file .env nao bi commit."
+
+  submodules:
+    name: Kiểm tra con trỏ submodule
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.SUBMODULE_TOKEN || github.token }}
+
+      - name: Mọi submodule phải ở đúng commit đã ghi
+        # Bẫy quen thuộc của submodule: commit trong repo con nhưng quên cập nhật con trỏ
+        # ở repo cha — người khác clone về sẽ thấy code cũ (ADR-0004).
+        run: |
+          status=$(git submodule status)
+          echo "$status"
+          if echo "$status" | grep -qE '^[+-]'; then
+            echo "::error::Co submodule khong o dung commit da ghi."
+            echo "Dau '-' = chua khoi tao. Dau '+' = dang o commit khac con tro repo cha."
+            exit 1
+          fi
+          echo "OK — ca 4 submodule dung commit."

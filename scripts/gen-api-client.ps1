@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 # Sinh TypeScript client cho mobile và admin từ docs/03-api/openapi.yaml.
 #
 # ĐỪNG SỬA TAY file trong các thư mục generated\ — chúng bị ghi đè mỗi lần chạy script này.

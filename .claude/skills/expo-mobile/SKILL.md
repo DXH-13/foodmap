@@ -7,28 +7,33 @@ description: Quy ước code mobile FoodMap (React Native + Expo + TypeScript) -
 
 ## Cấu trúc
 
+Route nằm ở **`src/app`**, không phải `app/` ở gốc — template Expo SDK 57 dùng layout này.
+
 ```
-app/                        expo-router: file = route
-  _layout.tsx               layout gốc: providers, i18n, theme
-  (auth)/                   nhóm route chưa đăng nhập
-    login.tsx  register.tsx  forgot-password.tsx
+src/app/                    expo-router: file = route
+  _layout.tsx               provider gốc: QueryClient, i18n, khôi phục phiên
   (tabs)/                   nhóm route có tab bar
     _layout.tsx
-    map.tsx  explore.tsx  favorites.tsx  profile.tsx
+    index.tsx               Bản đồ — màn hình mặc định
+    explore.tsx  favorites.tsx  profile.tsx
+  (auth)/login.tsx          nhóm route chưa đăng nhập
   place/[id].tsx            chi tiết địa điểm
   chat/index.tsx            chatbot
 
 src/
   api/generated/            ⚠️ SINH TỰ ĐỘNG — KHÔNG SỬA TAY
-  api/client.ts             cấu hình base URL, interceptor auth
+  api/client.ts             openapi-fetch + middleware gắn token, Accept-Language
+  api/queryKeys.ts          khai tập trung mọi query key
   components/               component dùng chung, không gắn với feature
   features/<tên>/           component + hook riêng của một feature
   hooks/                    hook dùng chung
   i18n/                     cấu hình i18next + locales/vi.json, en.json
   store/                    zustand
-  theme/                    màu, typography, spacing
-  lib/                      tiện ích thuần (format, validate)
+  constants/                màu, typography, spacing
+  types/                    khai báo kiểu bổ sung (ví dụ *.css)
 ```
+
+Cấu hình Expo ở **`app.config.ts`** (không phải `app.json`) để đọc được biến môi trường.
 
 **`src/api/generated/` bị ghi đè mỗi lần chạy `scripts/gen-api-client`.** Muốn đổi kiểu
 dữ liệu API thì sửa `docs/03-api/openapi.yaml` — xem skill `api-contract`.

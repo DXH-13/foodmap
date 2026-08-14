@@ -1,0 +1,12 @@
+[submodule "docs"]
+	path = docs
+	url = https://github.com/DXH-13/foodmap-docs.git
+[submodule "backend"]
+	path = backend
+	url = https://github.com/DXH-13/foodmap-backend.git
+[submodule "mobile"]
+	path = mobile
+	url = https://github.com/DXH-13/foodmap-mobile.git
+[submodule "admin"]
+	path = admin
+	url = https://github.com/DXH-13/foodmap-admin.git

@@ -173,7 +173,25 @@ git commit -m "chore(submodule): cap nhat backend len ban moi nhat"
 
 **Bẫy thường gặp:** commit ở repo con nhưng quên cập nhật con trỏ ở repo cha —
 người khác clone về sẽ thấy code cũ. Luôn kiểm tra `git status` ở repo cha sau khi
-làm việc trong submodule.
+làm việc trong submodule. CI của repo cha có bước chặn việc này, và workflow
+`bump-submodules.yml` kéo con trỏ lên bản mới nhất mỗi tuần.
+
+**Submodule là private.** CI của repo cha cần secret `SUBMODULE_TOKEN` (Personal Access
+Token có quyền đọc 4 repo con) mới checkout được chúng. Chưa đặt secret thì các job
+cần submodule sẽ thất bại.
+
+---
+
+## 7b. Bẫy môi trường đã gặp thật
+
+Ghi lại để không mất thời gian lần thứ hai.
+
+| Triệu chứng | Nguyên nhân | Cách xử lý |
+|---|---|---|
+| Script `.ps1` báo lỗi cú pháp, ký tự tiếng Việt thành `Ã¡Â»` | Windows PowerShell 5.1 đọc `.ps1` theo bảng mã ANSI khi file không có BOM | Lưu file `.ps1` bằng **UTF-8 kèm BOM**. Bốn script trong `scripts/` đã có BOM — giữ nguyên khi sửa |
+| `npx @next/codemod` làm hỏng ký tự tiếng Việt trong file nó sửa | Cùng nguyên nhân: công cụ đọc/ghi không đúng bảng mã | Sau khi chạy codemod, kiểm tra lại file bị sửa và viết lại phần comment nếu cần |
+| Cổng 5432/6379/9000 đã bị chiếm | Dự án khác trên máy đang chạy Postgres/Redis/MinIO | FoodMap cố ý dùng 5433/6380/9002 — đổi được trong `infra/.env` |
+| `Cannot find module 'eslint'` khi chạy `expo lint` lần đầu | `expo lint` tự thêm eslint vào `package.json` nhưng chưa cài | Chạy `npm install` rồi lint lại |
 
 ---
 

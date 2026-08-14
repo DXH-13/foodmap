@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 # Bật hạ tầng dev FoodMap và đợi tới khi mọi service khoẻ.
 $ErrorActionPreference = 'Stop'
 

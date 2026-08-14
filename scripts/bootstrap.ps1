@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 # Khởi tạo workspace FoodMap: submodule, file .env, dependency.
 # Chạy được nhiều lần, an toàn.
 $ErrorActionPreference = 'Stop'
