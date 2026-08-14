@@ -3,7 +3,11 @@
 #
 # ĐỪNG SỬA TAY file trong các thư mục generated\ — chúng bị ghi đè mỗi lần chạy script này.
 # Muốn đổi kiểu dữ liệu API thì sửa openapi.yaml rồi chạy lại.
-$ErrorActionPreference = 'Stop'
+#
+# ⚠️ File phải lưu dạng UTF-8 KÈM BOM (PowerShell 5.1 đọc .ps1 theo ANSI khi thiếu BOM).
+# ⚠️ KHÔNG đặt $ErrorActionPreference = 'Stop': npx ghi tiến trình ra stderr.
+
+$ErrorActionPreference = 'Continue'
 
 $Root = Split-Path -Parent $PSScriptRoot
 Set-Location $Root
@@ -23,7 +27,8 @@ $readme = @'
 # Thư mục sinh tự động — KHÔNG SỬA TAY
 
 Toàn bộ nội dung ở đây được sinh từ `docs/03-api/openapi.yaml` bằng
-`scripts/gen-api-client.ps1`. Mọi thay đổi sửa tay sẽ mất khi chạy lại script.
+`scripts/gen-api-client.ps1` (hoặc bản `.sh`). Mọi thay đổi sửa tay sẽ mất khi
+chạy lại script.
 
 Cần đổi kiểu dữ liệu của API? Sửa `docs/03-api/openapi.yaml`, rồi:
 
@@ -43,7 +48,7 @@ foreach ($target in @('mobile', 'admin')) {
     New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 
     npx --yes openapi-typescript $Spec --output "$outDir\schema.ts"
-    if (-not $?) { Warn "Sinh client cho $target thất bại"; exit 1 }
+    if ($LASTEXITCODE -ne 0) { Warn "Sinh client cho $target thất bại"; exit 1 }
 
     $readme | Out-File -FilePath "$outDir\README.md" -Encoding utf8
     Ok "$outDir\schema.ts"
@@ -56,7 +61,7 @@ foreach ($target in @('mobile', 'admin')) {
         Write-Host "    $target : " -NoNewline
         Push-Location $target
         npx --yes tsc --noEmit 2>&1 | Out-Null
-        $failed = -not $?
+        $failed = $LASTEXITCODE -ne 0
         Pop-Location
         if ($failed) {
             Write-Host 'có lỗi' -ForegroundColor Yellow

@@ -1,6 +1,11 @@
 ﻿#Requires -Version 5.1
 # Bật hạ tầng dev FoodMap và đợi tới khi mọi service khoẻ.
-$ErrorActionPreference = 'Stop'
+#
+# ⚠️ File phải lưu dạng UTF-8 KÈM BOM (PowerShell 5.1 đọc .ps1 theo ANSI khi thiếu BOM).
+# ⚠️ KHÔNG đặt $ErrorActionPreference = 'Stop': lệnh native ghi ra stderr sẽ bị coi là
+#    lỗi dừng. Kiểm tra $LASTEXITCODE thay vì dựa vào đó.
+
+$ErrorActionPreference = 'Continue'
 
 $Root = Split-Path -Parent $PSScriptRoot
 Set-Location $Root
@@ -18,6 +23,11 @@ if (-not (Test-Path 'infra\.env')) {
 
 Info 'Khởi động dịch vụ'
 docker compose -f $ComposeFile up -d
+if ($LASTEXITCODE -ne 0) {
+    Warn 'Không khởi động được. Cổng có thể đang bị dịch vụ khác chiếm —'
+    Warn 'FoodMap dùng 5433 / 6380 / 9002 / 9003, đổi được trong infra\.env.'
+    exit 1
+}
 
 Info 'Đợi healthcheck (tối đa 90 giây)'
 $healthy = $false
