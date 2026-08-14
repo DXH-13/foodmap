@@ -1,0 +1,65 @@
+# === Bí mật / môi trường ===
+.env
+.env.*
+!.env.example
+*.pem
+*.p8
+*.p12
+*.keystore
+google-services.json
+GoogleService-Info.plist
+
+# === Node / JS ===
+node_modules/
+.npm/
+.pnpm-store/
+*.tsbuildinfo
+.next/
+out/
+dist/
+build/
+coverage/
+
+# === Java / Gradle ===
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+target/
+*.class
+*.jar
+!gradle-wrapper.jar
+hs_err_pid*
+
+# === Expo / React Native ===
+.expo/
+.expo-shared/
+*.jks
+android/app/build/
+ios/Pods/
+ios/build/
+
+# === Docker / dữ liệu local ===
+infra/data/
+*.sqlite
+*.db
+
+# === IDE ===
+.idea/
+*.iml
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.swp
+
+# === OS ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Logs / tạm ===
+*.log
+logs/
+tmp/
+.cache/
+
+# === Claude Code (local, không commit) ===
+.claude/settings.local.json

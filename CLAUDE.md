@@ -1,0 +1,3 @@
+# FoodMap
+
+@AGENTS.md

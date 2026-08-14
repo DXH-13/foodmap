@@ -1,0 +1,87 @@
+name: foodmap
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: foodmap-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-foodmap}
+      POSTGRES_USER: ${POSTGRES_USER:-foodmap}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-foodmap}
+      # Cần cho so sánh chuỗi tiếng Việt có dấu
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C.UTF-8"
+    ports:
+      # Cổng host 5433 (không phải 5432) để không đụng Postgres khác đang chạy trên máy.
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-foodmap} -d ${POSTGRES_DB:-foodmap}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+
+  redis:
+    image: redis:7-alpine
+    container_name: foodmap-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "${REDIS_PORT:-6380}:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+
+  # Lưu ảnh và video review. Tương thích S3 — đổi sang S3 thật ở prod chỉ cần đổi endpoint.
+  # Bucket được backend tự tạo lúc khởi động nếu chưa có.
+  minio:
+    image: minio/minio:latest
+    container_name: foodmap-minio
+    restart: unless-stopped
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    ports:
+      - "${MINIO_PORT:-9002}:9000"
+      - "${MINIO_CONSOLE_PORT:-9003}:9001"
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  # Hộp thư giả cho dev: email quên mật khẩu, xác minh tài khoản đều rơi vào đây.
+  # Không có email nào thoát ra internet.
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: foodmap-mailpit
+    restart: unless-stopped
+    environment:
+      MP_MAX_MESSAGES: 500
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    ports:
+      - "${MAILPIT_SMTP_PORT:-1025}:1025"
+      - "${MAILPIT_UI_PORT:-8025}:8025"
+    healthcheck:
+      test: ["CMD", "/mailpit", "readyz"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+
+volumes:
+  db-data:
+  redis-data:
+  minio-data:

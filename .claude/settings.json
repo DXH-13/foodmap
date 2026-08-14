@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git submodule status:*)",
+      "Bash(git submodule update:*)",
+      "Bash(docker compose ps:*)",
+      "Bash(docker compose logs:*)",
+      "Bash(docker ps:*)",
+      "Bash(./gradlew build:*)",
+      "Bash(./gradlew test:*)",
+      "Bash(./gradlew compileJava:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx tsc --noEmit:*)",
+      "Bash(curl http://localhost:*)",
+      "Bash(./scripts/gen-api-client.sh:*)",
+      "Bash(./scripts/dev-up.sh:*)",
+      "Bash(./scripts/dev-down.sh:*)"
+    ],
+    "deny": [
+      "Read(./**/.env)",
+      "Read(./**/.env.*)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.p8)",
+      "Read(./**/*.keystore)",
+      "Bash(git push --force:*)",
+      "Bash(docker compose down -v:*)",
+      "Bash(gh repo delete:*)"
+    ]
+  },
+  "env": {
+    "FOODMAP_OPENAPI": "docs/03-api/openapi.yaml"
+  }
+}

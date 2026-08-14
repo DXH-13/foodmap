@@ -1,0 +1,27 @@
+# Chuẩn hoá line ending: repo luôn lưu LF, checkout theo OS
+* text=auto eol=lf
+
+# Script Windows luôn CRLF
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Script Unix luôn LF (kể cả khi checkout trên Windows)
+*.sh text eol=lf
+gradlew text eol=lf
+
+# Binary — không đụng vào
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.mp4 binary
+*.pdf binary
+*.jar binary
+*.keystore binary
+
+# File sinh tự động — ẩn khỏi diff, đánh dấu là generated
+mobile/src/api/generated/** linguist-generated=true -diff
+admin/src/api/generated/** linguist-generated=true -diff
