@@ -45,19 +45,24 @@ else
 fi
 
 # --- Dependency --------------------------------------------------------------
-if [ -f mobile/package.json ]; then
-  info "Cài dependency cho mobile"
-  (cd mobile && npm install)
-else
-  warn "Bỏ qua mobile — chưa có package.json"
-fi
+for client in mobile admin; do
+  if [ ! -f "$client/package.json" ]; then
+    warn "Bỏ qua $client — chưa có package.json"
+    continue
+  fi
 
-if [ -f admin/package.json ]; then
-  info "Cài dependency cho admin"
-  (cd admin && npm install)
-else
-  warn "Bỏ qua admin — chưa có package.json"
-fi
+  info "Cài dependency cho $client"
+  # Có lockfile thì dùng `npm ci`, KHÔNG dùng `npm install`.
+  # Lý do không phải lý thuyết: `npm install` trên cây sạch đã từng cài thiếu —
+  # gói có mặt nhưng thiếu toàn bộ file .d.ts, khiến `tsc --noEmit` báo
+  # "Cannot find module" cho những gói rõ ràng đang nằm trong node_modules.
+  if [ -f "$client/package-lock.json" ]; then
+    (cd "$client" && npm ci --no-audit --no-fund)
+  else
+    (cd "$client" && npm install --no-audit --no-fund)
+  fi
+  ok "$client sẵn sàng"
+done
 
 if [ -f backend/gradlew ]; then
   info "Tải dependency cho backend"

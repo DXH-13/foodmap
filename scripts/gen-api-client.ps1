@@ -50,7 +50,15 @@ foreach ($target in @('mobile', 'admin')) {
     npx --yes openapi-typescript $Spec --output "$outDir\schema.ts"
     if ($LASTEXITCODE -ne 0) { Warn "Sinh client cho $target thất bại"; exit 1 }
 
-    $readme | Out-File -FilePath "$outDir\README.md" -Encoding utf8
+    # Ghi UTF-8 KHÔNG BOM và dùng LF, để khớp byte-for-byte với bản .sh sinh ra.
+    # `Out-File -Encoding utf8` trên PowerShell 5.1 thêm BOM và dùng CRLF — file sẽ
+    # khác nhau tuỳ người chạy script trên hệ nào, gây diff giả liên tục.
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText(
+        (Join-Path (Get-Location) "$outDir\README.md"),
+        ($readme -replace "`r`n", "`n"),
+        $utf8NoBom)
+
     Ok "$outDir\schema.ts"
 }
 

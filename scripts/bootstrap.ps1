@@ -68,10 +68,21 @@ foreach ($client in @('mobile', 'admin')) {
     if (Test-Path "$client\package.json") {
         Info "Cài dependency cho $client"
         Push-Location $client
-        npm install --no-audit --no-fund
+
+        # Có lockfile thì dùng `npm ci`, KHÔNG dùng `npm install`.
+        # Lý do không phải lý thuyết: `npm install` trên cây sạch đã từng cài thiếu —
+        # gói có mặt nhưng thiếu toàn bộ file .d.ts, khiến `tsc --noEmit` báo
+        # "Cannot find module" cho những gói rõ ràng đang nằm trong node_modules.
+        # `npm ci` xoá sạch node_modules và cài đúng theo lockfile.
+        if (Test-Path 'package-lock.json') {
+            npm ci --no-audit --no-fund
+        } else {
+            npm install --no-audit --no-fund
+        }
+
         $code = $LASTEXITCODE
         Pop-Location
-        if ($code -ne 0) { Fail "npm install trong $client thất bại (mã $code)." }
+        if ($code -ne 0) { Fail "Cài dependency cho $client thất bại (mã $code)." }
         Ok "$client sẵn sàng"
     } else {
         Warn "Bỏ qua $client — chưa có package.json"
