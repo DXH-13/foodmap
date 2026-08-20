@@ -14,12 +14,12 @@ Dùng subagent `srs-writer`, hoặc tự làm theo hướng dẫn của nó.
 2. Đọc tài liệu hiện có liên quan trong `docs/` trước khi viết thêm —
    tránh viết trùng hoặc mâu thuẫn với phần đã có.
 3. Cập nhật đúng file:
-   - Yêu cầu chức năng / phi chức năng → `docs/01-srs/srs.md`
-   - Use case → `docs/01-srs/use-cases.md`
-   - Tiêu chí nghiệm thu → `docs/01-srs/acceptance-criteria.md`
-   - Quyết định kiến trúc → `docs/02-architecture/adr/ADR-XXXX-<tên>.md` (**file mới**,
+   - Yêu cầu chức năng / phi chức năng → `docs/SRS/srs.md`
+   - Use case → `docs/SRS/use-cases.md`
+   - Tiêu chí nghiệm thu → `docs/SRS/acceptance-criteria.md`
+   - Quyết định kiến trúc → `docs/SDD/kien-truc/adr/ADR-XXXX-<tên>.md` (**file mới**,
      không sửa ADR cũ)
-   - Kế hoạch / backlog → `docs/07-plan/`
+   - Kế hoạch / backlog → `docs/Management-Plan/`
 4. Yêu cầu mới phải: có mã (`FR-<module>-<số>` hoặc `NFR-<số>`), **kiểm chứng được**,
    và nói rõ ảnh hưởng tới phần nào (backend / mobile / admin / DB).
 5. Nếu yêu cầu mới kéo theo thay đổi API hoặc schema, **nêu rõ điều đó** ở cuối —

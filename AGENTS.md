@@ -25,7 +25,7 @@ trên đất nước Việt Nam. Người dùng tìm quán quanh mình trên b�
 | 8 | Yêu thích & đã đến | Danh sách yêu thích, lịch sử đã đến, đếm số lượt đến |
 | 9 | Thông báo | In-app + push (Expo Push) |
 
-Chi tiết đầy đủ: `docs/01-srs/srs.md`.
+Chi tiết đầy đủ: `docs/SRS/srs.md`.
 
 ---
 
@@ -36,7 +36,7 @@ commit và push riêng, rồi mới cập nhật con trỏ ở repo cha.
 
 ```
 foodmap/                    ← repo cha: config, script, hạ tầng dev
-├─ docs/      → foodmap-docs      Tài liệu: SRS, kiến trúc, ADR, openapi.yaml
+├─ docs/      → foodmap-docs      Bộ tài liệu 6 phần (xem cây bên dưới)
 ├─ backend/   → foodmap-backend   Java 21 + Spring Boot 3 + PostgreSQL/PostGIS
 ├─ mobile/    → foodmap-mobile    React Native + Expo + TypeScript
 ├─ admin/     → foodmap-admin     Next.js 15 + TypeScript
@@ -44,6 +44,26 @@ foodmap/                    ← repo cha: config, script, hạ tầng dev
 ├─ scripts/                       bootstrap, dev-up, gen-api-client (.sh + .ps1)
 └─ .claude/                       skills, subagents, slash commands
 ```
+
+Bên trong `docs/` — sáu thư mục đặt theo tiêu đề tài liệu bàn giao:
+
+```
+docs/
+├─ Introduction/     Tổng quan, tầm nhìn, chân dung người dùng, từ điển thuật ngữ
+├─ Management-Plan/  Kế hoạch, lộ trình, backlog, phân công, quản lý rủi ro
+├─ SRS/              Yêu cầu chức năng / phi chức năng, use case, tiêu chí nghiệm thu
+├─ SDD/              Thiết kế hệ thống
+│  ├─ api/           **openapi.yaml — hợp đồng API** + CHANGELOG.md
+│  ├─ kien-truc/     Sơ đồ C4, ADR
+│  ├─ du-lieu/       ERD, từ điển dữ liệu, mô hình địa lý
+│  ├─ giao-dien/     Luồng người dùng, danh sách màn hình
+│  └─ van-hanh/      Môi trường, triển khai, runbook
+├─ Test-Document/    Test plan, test case, ma trận phủ, báo cáo kiểm thử
+└─ User-Guides/      Hướng dẫn người dùng cuối và quản trị viên
+```
+
+Tên thư mục cấp một **nối bằng dấu gạch ngang, không dùng khoảng trắng** — đường dẫn
+còn được `scripts/gen-api-client` và CI đọc trực tiếp.
 
 Khi được giao một việc, **xác định nó thuộc repo con nào trước khi sửa file**.
 Việc chạm nhiều repo (ví dụ thêm một endpoint) phải theo đúng thứ tự ở mục 4.
@@ -64,19 +84,19 @@ Việc chạm nhiều repo (ví dụ thêm một endpoint) phải theo đúng th
 | Chatbot | Claude API (`claude-opus-5`) qua Anthropic Java SDK | Tool use + streaming, gọi thẳng vào service tìm kiếm địa điểm của backend |
 | Migration | Flyway | Migration tuần tự, versioned, chạy tự động khi khởi động |
 
-ADR ghi lại quyết định: `docs/02-architecture/adr/`.
+ADR ghi lại quyết định: `docs/SDD/kien-truc/adr/`.
 
 ---
 
 ## 4. Quy tắc quan trọng nhất: contract-first
 
-`docs/03-api/openapi.yaml` là **nguồn sự thật duy nhất** cho hợp đồng API.
+`docs/SDD/api/openapi.yaml` là **nguồn sự thật duy nhất** cho hợp đồng API.
 Java và TypeScript không share type trực tiếp được, nên OpenAPI là cầu nối.
 
 Khi thêm hoặc sửa một endpoint, **luôn theo đúng thứ tự này**:
 
 ```
-1. Sửa docs/03-api/openapi.yaml          ← trước tiên, luôn luôn
+1. Sửa docs/SDD/api/openapi.yaml          ← trước tiên, luôn luôn
 2. Chạy scripts/gen-api-client           ← sinh lại TS client cho mobile + admin
 3. Implement controller/service ở backend
 4. Dùng client đã sinh ở mobile / admin

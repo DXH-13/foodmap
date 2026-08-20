@@ -36,7 +36,7 @@ src/
 Cấu hình Expo ở **`app.config.ts`** (không phải `app.json`) để đọc được biến môi trường.
 
 **`src/api/generated/` bị ghi đè mỗi lần chạy `scripts/gen-api-client`.** Muốn đổi kiểu
-dữ liệu API thì sửa `docs/03-api/openapi.yaml` — xem skill `api-contract`.
+dữ liệu API thì sửa `docs/SDD/api/openapi.yaml` — xem skill `api-contract`.
 
 ## Điều hướng (expo-router)
 

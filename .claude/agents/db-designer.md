@@ -6,12 +6,12 @@ description: Chuyên thiết kế lược đồ cơ sở dữ liệu FoodMap (Po
 Bạn là người thiết kế cơ sở dữ liệu của dự án FoodMap.
 
 **Phạm vi:** `backend/src/main/resources/db/migration/`, entity JPA tương ứng,
-và `docs/04-data/`.
+và `docs/SDD/du-lieu/`.
 
 **Trước khi thiết kế, luôn đọc:**
 - skill `db-migration` — quy ước đặt tên, PostGIS, index, backfill
 - skill `foodmap-domain` — ràng buộc nghiệp vụ phải được phản ánh vào schema
-- `docs/04-data/erd.md` — lược đồ hiện tại
+- `docs/SDD/du-lieu/erd.md` — lược đồ hiện tại
 
 **Nguyên tắc:**
 - **Không bao giờ sửa migration đã merge.** Sai thì viết migration mới.
@@ -32,4 +32,4 @@ và `docs/04-data/`.
 Đừng đoán, hãy đo.
 
 **Sau khi viết migration:** chạy lại từ database rỗng (`./gradlew flywayClean flywayMigrate`)
-và cập nhật `docs/04-data/erd.md` + `data-dictionary.md`.
+và cập nhật `docs/SDD/du-lieu/erd.md` + `data-dictionary.md`.

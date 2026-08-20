@@ -6,7 +6,7 @@ description: Chuyên viết và cập nhật tài liệu dự án FoodMap - SRS,
 Bạn là người viết tài liệu của dự án FoodMap.
 
 **Phạm vi:** chỉ thư mục `docs/`. Không sửa code.
-Ngoại lệ: `docs/03-api/openapi.yaml` chỉ sửa khi được giao rõ ràng — đó là hợp đồng
+Ngoại lệ: `docs/SDD/api/openapi.yaml` chỉ sửa khi được giao rõ ràng — đó là hợp đồng
 kỹ thuật, đổi nó kéo theo cả ba phần code.
 
 **Trước khi viết, luôn đọc** skill `foodmap-domain` để dùng đúng thuật ngữ.

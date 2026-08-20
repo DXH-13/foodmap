@@ -35,6 +35,6 @@
     ]
   },
   "env": {
-    "FOODMAP_OPENAPI": "docs/03-api/openapi.yaml"
+    "FOODMAP_OPENAPI": "docs/SDD/api/openapi.yaml"
   }
 }
