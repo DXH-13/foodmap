@@ -63,3 +63,6 @@ tmp/
 
 # === Claude Code (local, không commit) ===
 .claude/settings.local.json
+
+# === Cursor (local, khong commit — chua API key) ===
+.cursor/mcp.json

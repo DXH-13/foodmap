@@ -1,0 +1,6 @@
+---
+description: Khi sinh hoặc implement UI từ Google Stitch — bắt MCP Stitch, prompt SDD, không dán HTML vào React Native
+alwaysApply: false
+---
+
+Khi user muốn giao diện từ Stitch: đọc skill `stitch-ui` và `docs/SDD/giao-dien/stitch-workflow.md`. Kiểm tra MCP Stitch trước. Implement Expo/Next theo thiết kế, không paste HTML Stitch vào mobile.

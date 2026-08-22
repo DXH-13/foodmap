@@ -192,6 +192,9 @@ Ghi lại để không mất thời gian lần thứ hai.
 | `npx @next/codemod` làm hỏng ký tự tiếng Việt trong file nó sửa | Cùng nguyên nhân: công cụ đọc/ghi không đúng bảng mã | Sau khi chạy codemod, kiểm tra lại file bị sửa và viết lại phần comment nếu cần |
 | Cổng 5432/6379/9000 đã bị chiếm | Dự án khác trên máy đang chạy Postgres/Redis/MinIO | FoodMap cố ý dùng 5433/6380/9002 — đổi được trong `infra/.env` |
 | `Cannot find module 'eslint'` khi chạy `expo lint` lần đầu | `expo lint` tự thêm eslint vào `package.json` nhưng chưa cài | Chạy `npm install` rồi lint lại |
+| MCP Stitch 0 tool / không thấy server | Cursor HTTP MCP nuốt `tools/list` quá lớn, hoặc thiếu `STITCH_API_KEY` | Dùng proxy trong `.cursor/mcp.json`; `setx STITCH_API_KEY` rồi restart Cursor |
+
+Sinh UI Stitch: skill `stitch-ui`, lệnh `/stitch-screen`, chi tiết `docs/SDD/giao-dien/stitch-workflow.md`.
 
 ---
 
