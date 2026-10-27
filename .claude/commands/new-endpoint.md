@@ -20,7 +20,7 @@ Trước khi viết gì, xác định và nêu lại cho người dùng xác nh�
 
 Có chỗ nào chưa rõ thì hỏi, đừng tự đoán.
 
-### 2. Sửa `docs/03-api/openapi.yaml`
+### 2. Sửa `docs/SDD/api/openapi.yaml`
 
 Thêm path, schema, và mã lỗi mới. Bảo đảm: có `tags`, `summary` tiếng Việt,
 `required`/`nullable` khai đúng, danh sách thì dùng schema `Page`, lỗi dùng `ApiError`.

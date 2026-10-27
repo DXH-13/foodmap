@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sinh TypeScript client cho mobile và admin từ docs/03-api/openapi.yaml.
+# Sinh TypeScript client cho mobile và admin từ docs/SDD/api/openapi.yaml.
 #
 # ĐỪNG SỬA TAY file trong các thư mục generated/ — chúng bị ghi đè mỗi lần chạy script này.
 # Muốn đổi kiểu dữ liệu API thì sửa openapi.yaml rồi chạy lại.
@@ -8,7 +8,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-SPEC="docs/03-api/openapi.yaml"
+SPEC="docs/SDD/api/openapi.yaml"
 
 info() { printf '\n\033[1;36m==> %s\033[0m\n' "$1"; }
 warn() { printf '\033[1;33m!  %s\033[0m\n' "$1"; }
@@ -37,10 +37,10 @@ generate() {
   cat > "$outdir/README.md" <<'EOF'
 # Thư mục sinh tự động — KHÔNG SỬA TAY
 
-Toàn bộ nội dung ở đây được sinh từ `docs/03-api/openapi.yaml` bằng
+Toàn bộ nội dung ở đây được sinh từ `docs/SDD/api/openapi.yaml` bằng
 `scripts/gen-api-client.sh`. Mọi thay đổi sửa tay sẽ mất khi chạy lại script.
 
-Cần đổi kiểu dữ liệu của API? Sửa `docs/03-api/openapi.yaml`, rồi:
+Cần đổi kiểu dữ liệu của API? Sửa `docs/SDD/api/openapi.yaml`, rồi:
 
     ./scripts/gen-api-client.sh
 

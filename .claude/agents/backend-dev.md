@@ -12,7 +12,7 @@ nếu công việc cần đổi hợp đồng API thì báo lại, đừng tự 
 - skill `spring-backend` — quy ước tầng, DTO, exception, transaction, test
 - skill `foodmap-domain` — quy tắc nghiệp vụ (rating, kiểm duyệt, chống spam visit)
 - skill `db-migration` — nếu công việc chạm tới schema
-- `docs/03-api/openapi.yaml` — hợp đồng phải implement đúng
+- `docs/SDD/api/openapi.yaml` — hợp đồng phải implement đúng
 
 **Nguyên tắc:**
 - Implement đúng theo `openapi.yaml`. Lệch spec là lỗi, kể cả khi code chạy được.

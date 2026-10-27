@@ -9,7 +9,7 @@ cả iOS và Android.
 
 | Thư mục | Repo | Nội dung |
 |---|---|---|
-| `docs/` | [foodmap-docs](https://github.com/DXH-13/foodmap-docs) | SRS, kiến trúc, ADR, `openapi.yaml` |
+| `docs/` | [foodmap-docs](https://github.com/DXH-13/foodmap-docs) | Introduction, Management-Plan, SRS, SDD (chứa `openapi.yaml`), Test-Document, User-Guides |
 | `backend/` | [foodmap-backend](https://github.com/DXH-13/foodmap-backend) | Java 21 · Spring Boot 3 · PostgreSQL + PostGIS |
 | `mobile/` | [foodmap-mobile](https://github.com/DXH-13/foodmap-mobile) | React Native · Expo · TypeScript |
 | `admin/` | [foodmap-admin](https://github.com/DXH-13/foodmap-admin) | Next.js 15 · TypeScript |
@@ -26,7 +26,7 @@ Admin (Next.js)   ─┘         │                Redis
                              └─→  Google Maps API (geocode, seed dữ liệu)
 ```
 
-Hợp đồng API là `docs/03-api/openapi.yaml`. Backend implement theo nó; mobile và admin
+Hợp đồng API là `docs/SDD/api/openapi.yaml`. Backend implement theo nó; mobile và admin
 **sinh** TypeScript client từ nó. Sửa API luôn bắt đầu từ file này.
 
 ## Bắt đầu
@@ -83,7 +83,7 @@ Postgres/Redis/MinIO của dự án khác đang chạy trên cùng máy. Đổi 
 
 ## Trạng thái
 
-Đây là **bộ khung** (Phase 0 của [lộ trình](https://github.com/DXH-13/foodmap-docs/blob/main/07-plan/roadmap-v1.md)).
+Đây là **bộ khung** (Phase 0 của [lộ trình](https://github.com/DXH-13/foodmap-docs/tree/main/Management-Plan)).
 Đã chạy được và kiểm chứng đầu-cuối:
 
 | Hạng mục | Trạng thái |

@@ -1,5 +1,5 @@
 ﻿#Requires -Version 5.1
-# Sinh TypeScript client cho mobile và admin từ docs/03-api/openapi.yaml.
+# Sinh TypeScript client cho mobile và admin từ docs/SDD/api/openapi.yaml.
 #
 # ĐỪNG SỬA TAY file trong các thư mục generated\ — chúng bị ghi đè mỗi lần chạy script này.
 # Muốn đổi kiểu dữ liệu API thì sửa openapi.yaml rồi chạy lại.
@@ -11,7 +11,7 @@ $ErrorActionPreference = 'Continue'
 
 $Root = Split-Path -Parent $PSScriptRoot
 Set-Location $Root
-$Spec = 'docs/03-api/openapi.yaml'
+$Spec = 'docs/SDD/api/openapi.yaml'
 
 function Info($m) { Write-Host "`n==> $m" -ForegroundColor Cyan }
 function Warn($m) { Write-Host "!  $m" -ForegroundColor Yellow }
@@ -26,11 +26,11 @@ if (-not (Test-Path $Spec)) {
 $readme = @'
 # Thư mục sinh tự động — KHÔNG SỬA TAY
 
-Toàn bộ nội dung ở đây được sinh từ `docs/03-api/openapi.yaml` bằng
+Toàn bộ nội dung ở đây được sinh từ `docs/SDD/api/openapi.yaml` bằng
 `scripts/gen-api-client.ps1` (hoặc bản `.sh`). Mọi thay đổi sửa tay sẽ mất khi
 chạy lại script.
 
-Cần đổi kiểu dữ liệu của API? Sửa `docs/03-api/openapi.yaml`, rồi:
+Cần đổi kiểu dữ liệu của API? Sửa `docs/SDD/api/openapi.yaml`, rồi:
 
     .\scripts\gen-api-client.ps1
 

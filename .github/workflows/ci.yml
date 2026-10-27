@@ -29,15 +29,15 @@ jobs:
           node-version: '22'
 
       - name: openapi.yaml phải hợp lệ
-        run: npx --yes openapi-typescript docs/03-api/openapi.yaml --output /tmp/schema.ts
+        run: npx --yes openapi-typescript docs/SDD/api/openapi.yaml --output /tmp/schema.ts
 
       - name: Client sinh ra phải khớp với openapi.yaml
         # Đây là cổng bắt buộc của quy tắc contract-first (ADR-0002): sửa spec mà quên
         # chạy gen-api-client thì client vẫn dùng kiểu cũ, và lỗi chỉ lộ ra lúc chạy thật.
         run: |
-          npx --yes openapi-typescript docs/03-api/openapi.yaml \
+          npx --yes openapi-typescript docs/SDD/api/openapi.yaml \
             --output mobile/src/api/generated/schema.ts
-          npx --yes openapi-typescript docs/03-api/openapi.yaml \
+          npx --yes openapi-typescript docs/SDD/api/openapi.yaml \
             --output admin/src/api/generated/schema.ts
 
           for target in mobile admin; do

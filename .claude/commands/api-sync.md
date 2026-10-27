@@ -8,7 +8,7 @@ allowed-tools: Bash(./scripts/gen-api-client.sh:*), Bash(npx tsc:*), Bash(git di
 1. Đọc skill `api-contract` nếu chưa nắm quy trình.
 2. Chạy `./scripts/gen-api-client.sh` (Windows: `.\scripts\gen-api-client.ps1`).
    Sinh lại `mobile/src/api/generated/` và `admin/src/api/generated/`
-   từ `docs/03-api/openapi.yaml`.
+   từ `docs/SDD/api/openapi.yaml`.
 3. Chạy kiểm tra kiểu ở cả hai phần:
    - `cd mobile && npx tsc --noEmit`
    - `cd admin && npx tsc --noEmit`

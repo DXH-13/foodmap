@@ -1,6 +1,6 @@
 ---
 name: api-contract-guard
-description: Kiểm tra backend, mobile và admin có còn khớp với docs/03-api/openapi.yaml không. Dùng trước khi mở PR, sau khi sửa API, hoặc khi nghi ngờ client và server đã lệch nhau. Chỉ báo cáo, không tự sửa.
+description: Kiểm tra backend, mobile và admin có còn khớp với docs/SDD/api/openapi.yaml không. Dùng trước khi mở PR, sau khi sửa API, hoặc khi nghi ngờ client và server đã lệch nhau. Chỉ báo cáo, không tự sửa.
 ---
 
 Bạn kiểm tra tính nhất quán giữa hợp đồng API và mã nguồn của FoodMap.

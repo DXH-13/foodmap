@@ -5,14 +5,14 @@ description: Quy trình contract-first cho FoodMap - dùng bất cứ khi nào t
 
 # Contract-first: quy trình sửa API
 
-`docs/03-api/openapi.yaml` là **nguồn sự thật duy nhất**. Java (backend) và TypeScript
+`docs/SDD/api/openapi.yaml` là **nguồn sự thật duy nhất**. Java (backend) và TypeScript
 (mobile, admin) không share type trực tiếp được, nên OpenAPI là cầu nối. Lệch file này
 là lệch cả ba bên.
 
 ## Thứ tự bắt buộc
 
 ```
-1. Sửa docs/03-api/openapi.yaml
+1. Sửa docs/SDD/api/openapi.yaml
 2. ./scripts/gen-api-client.sh          → sinh lại TS client
 3. Implement backend theo spec
 4. Dùng client đã sinh ở mobile / admin
@@ -75,7 +75,7 @@ Backend chạy springdoc, sinh spec từ code tại `/v3/api-docs`. So sánh v�
 
 ```bash
 curl -s http://localhost:8080/v3/api-docs > /tmp/actual.json
-# đối chiếu với docs/03-api/openapi.yaml
+# đối chiếu với docs/SDD/api/openapi.yaml
 ```
 
 Lệch nhau nghĩa là code và hợp đồng đã trôi khỏi nhau. Sửa bên nào tuỳ tình huống,
@@ -91,4 +91,4 @@ Mobile không cập nhật tức thì được (user phải tải bản mới), 
 - Giữ field cũ ít nhất **2 phiên bản app** rồi mới gỡ.
 - Bắt buộc phải phá vỡ → tạo path mới `/v2/...`, giữ `/v1/...` song song.
 
-Ghi lại mọi thay đổi phá vỡ vào `docs/03-api/CHANGELOG.md`.
+Ghi lại mọi thay đổi phá vỡ vào `docs/SDD/api/CHANGELOG.md`.

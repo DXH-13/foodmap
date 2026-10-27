@@ -10,7 +10,7 @@ Tạo migration mới cho FoodMap: **$ARGUMENTS**
 ### 1. Kiểm tra hiện trạng
 
 - Liệt kê `backend/src/main/resources/db/migration/` để biết số version cao nhất.
-- Đọc `docs/04-data/erd.md` để nắm lược đồ hiện tại.
+- Đọc `docs/SDD/du-lieu/erd.md` để nắm lược đồ hiện tại.
 - **Xác nhận không sửa migration cũ.** Nếu việc cần làm là "sửa" một thay đổi trước đó,
   thì viết migration mới để sửa, không đụng vào file đã có.
 
@@ -43,8 +43,8 @@ Phải chạy sạch **từ database rỗng**, không chỉ trên DB dev hiện 
 
 ### 5. Cập nhật tài liệu
 
-Sửa `docs/04-data/erd.md` và `docs/04-data/data-dictionary.md` cho khớp.
+Sửa `docs/SDD/du-lieu/erd.md` và `docs/SDD/du-lieu/data-dictionary.md` cho khớp.
 
 ### 6. Nếu schema mới lộ ra API
 
-Thì phải cập nhật `docs/03-api/openapi.yaml` và sinh lại client — xem `/new-endpoint`.
+Thì phải cập nhật `docs/SDD/api/openapi.yaml` và sinh lại client — xem `/new-endpoint`.
