@@ -60,7 +60,8 @@ Việc chạm nhiều repo (ví dụ thêm một endpoint) phải theo đúng th
 | Cache | Redis 7 | Cache kết quả tìm kiếm, rate limit, blacklist refresh token |
 | Lưu trữ media | MinIO (dev) / S3 (prod) | API tương thích, đổi môi trường không đổi code |
 | Admin | Next.js 15 App Router + shadcn/ui | Cùng ngôn ngữ TypeScript với mobile, dùng chung TS client sinh từ OpenAPI |
-| Bản đồ | Google Maps | Dữ liệu POI quán ăn Việt Nam đầy đủ nhất; Places API để seed dữ liệu ban đầu |
+| Bản đồ (app) | MapLibre + OpenFreeMap | Không cần khoá API hay thanh toán; dữ liệu OpenStreetMap (ADR-0005) |
+| Seed địa điểm | Google Places API (backend) | Dữ liệu POI quán ăn Việt Nam đầy đủ nhất, chỉ dùng để nạp dữ liệu ban đầu |
 | Chatbot | Claude API (`claude-opus-5`) qua Anthropic Java SDK | Tool use + streaming, gọi thẳng vào service tìm kiếm địa điểm của backend |
 | Migration | Flyway | Migration tuần tự, versioned, chạy tự động khi khởi động |
 

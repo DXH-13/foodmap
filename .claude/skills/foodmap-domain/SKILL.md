@@ -80,7 +80,8 @@ Vòng đời: `PENDING` → `APPROVED` hoặc `REJECTED`, và bất kỳ lúc n�
 - Bán kính tìm kiếm mặc định **2 km**, tối đa cho phép **50 km**.
   Vượt quá thì trả 400, không âm thầm cắt bớt.
 - `status`: `DRAFT` `PUBLISHED` `TEMPORARILY_CLOSED` `PERMANENTLY_CLOSED`.
-  API công khai chỉ trả `PUBLISHED` và `TEMPORARILY_CLOSED`.
+  Danh sách, tìm kiếm, nearby chỉ trả `PUBLISHED` và `TEMPORARILY_CLOSED`; trang chi tiết
+  và review của quán trả thêm `PERMANENTLY_CLOSED` (kèm nhãn). `DRAFT` không bao giờ ra API công khai.
 - Giờ mở cửa lưu theo từng ngày trong tuần, cho phép nhiều khoảng trong ngày
   (quán bán sáng và tối, nghỉ trưa).
 
@@ -89,6 +90,8 @@ Vòng đời: `PENDING` → `APPROVED` hoặc `REJECTED`, và bất kỳ lúc n�
 - Bookmark thuần: có hoặc không, không có trạng thái trung gian.
 - Bấm yêu thích một place đã yêu thích → idempotent, trả 200, không trả lỗi.
 - Yêu thích một place đã `PERMANENTLY_CLOSED` vẫn giữ trong danh sách nhưng gắn nhãn.
+  Bấm vào vẫn mở được trang chi tiết (kèm nhãn "đã đóng cửa"); chỉ danh sách/tìm kiếm/nearby
+  mới ẩn quán đóng hẳn. Không ghi visit được cho quán đóng hẳn.
 
 ### Đa ngôn ngữ nội dung động
 
@@ -112,7 +115,10 @@ Loại: `REVIEW_APPROVED` `REVIEW_REJECTED` `FEEDBACK_RESOLVED` `NEW_PLACE_NEARB
 
 ## Phân quyền
 
-| Hành động | GUEST | USER | MODERATOR | ADMIN |
+**App mobile bắt buộc đăng nhập — không có chế độ khách** (quyết định 2026-10-27). Cột "API
+không token" chỉ mô tả backend: endpoint đọc công khai vẫn để mở, nhưng app không gọi khi chưa đăng nhập.
+
+| Hành động | API không token | USER | MODERATOR | ADMIN |
 |---|:---:|:---:|:---:|:---:|
 | Xem place, review công khai | ✅ | ✅ | ✅ | ✅ |
 | Viết review, gửi feedback, yêu thích, ghi visit | ❌ | ✅ | ✅ | ✅ |

@@ -79,14 +79,14 @@ onSuccess: () => {
 
 ## Bản đồ
 
-- `react-native-maps` với `provider={PROVIDER_GOOGLE}` trên **cả hai** nền tảng, để
-  giao diện và hành vi đồng nhất.
-- API key khai trong `app.json` → `ios.config.googleMapsApiKey` và
-  `android.config.googleMaps.apiKey`, đọc từ biến môi trường, không hardcode.
-- Nhiều marker thì bật clustering; render vài trăm marker rời sẽ giật.
-- Chỉ gọi API tìm quanh đây khi bản đồ **ngừng** di chuyển (`onRegionChangeComplete`)
-  và có debounce ~500ms. Gọi theo từng frame di chuyển sẽ spam server.
-- Bán kính suy ra từ `region.latitudeDelta`, giới hạn trong 2–50 km (xem skill `foodmap-domain`).
+- `@maplibre/maplibre-react-native` + bản đồ nền OpenFreeMap (ADR-0005). Không cần khoá API.
+  Là native module nên **không chạy trong Expo Go** — dùng `npx expo run:android`.
+- Toạ độ trong MapLibre là `[kinh độ, vĩ độ]` (`LngLat`), ngược với `{ latitude, longitude }`
+  của API. Giữ `attribution` bật — giấy phép OpenStreetMap bắt buộc.
+- Nhiều marker thì chuyển sang `GeoJSONSource` + layer có cluster; render vài trăm
+  `Marker` rời sẽ giật.
+- Danh sách quán gọi `/places/nearby` theo **vị trí GPS** (hoặc TP.HCM), bán kính 2 km (MAP-03).
+  Kéo bản đồ **không** tải lại danh sách — quyết định sản phẩm, đừng gắn API vào `onRegionDidChange`.
 
 ## Quyền (permission)
 
